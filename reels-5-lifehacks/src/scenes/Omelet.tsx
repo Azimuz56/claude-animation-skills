@@ -9,7 +9,7 @@ import {Sparkles, Steam, Shadow} from '../components/Fx';
 import {SceneProps} from './types';
 
 /** Стеклянная кружка. (0,0) — центр корпуса. level 0..1 — уровень смеси, mix 0..1 — размешано, puff 0..1 — омлет поднялся */
-const Mug: React.FC<{level: number; mix: number; puff: number; frame: number}> = ({level, mix, puff, frame}) => {
+export const Mug: React.FC<{level: number; mix: number; puff: number; frame: number}> = ({level, mix, puff, frame}) => {
 	const H = 280, W = 260;
 	const top = -H / 2, bottom = H / 2;
 	const surf = bottom - 20 - level * (H - 50);

@@ -29,7 +29,7 @@ const wavyPath = (a: number, phase: number) => {
 };
 
 /** Рубашка. (0,0) — центр воротника. wrinkle 1 — мятая, 0 — гладкая */
-const ShirtShape: React.FC<{wrinkle: number; frame: number}> = ({wrinkle, frame}) => {
+export const ShirtShape: React.FC<{wrinkle: number; frame: number}> = ({wrinkle, frame}) => {
 	const phase = frame * 0.12 * wrinkle;
 	const color = interpolateColors(wrinkle, [0, 1], ['#4FB6EC', '#8FB4CF']);
 	const dark = interpolateColors(wrinkle, [0, 1], ['#2E95CF', '#6C93B0']);
@@ -52,7 +52,7 @@ const ShirtShape: React.FC<{wrinkle: number; frame: number}> = ({wrinkle, frame}
 	);
 };
 
-const HangerTop: React.FC = () => (
+export const HangerTop: React.FC = () => (
 	<g>
 		<path d="M-14 -62 Q-14 -80 0 -80 Q14 -80 14 -62 Q14 -50 0 -46 L0 -30" fill="none" stroke="#8E96A3" strokeWidth={10} strokeLinecap="round" />
 		<path d="M0 -30 L-170 30 L170 30 Z" fill="none" stroke="#8E96A3" strokeWidth={10} strokeLinejoin="round" />

@@ -8,7 +8,7 @@ import {Sparkles, Star, Shadow} from '../components/Fx';
 import {SceneProps} from './types';
 
 /** Кроссовок, носок вправо. (0,0) — центр. Отверстие (куда кладём пакетик) ≈ (-90,-110) */
-const Shoe: React.FC = () => (
+export const Shoe: React.FC = () => (
 	<g>
 		<Shadow cx={0} cy={140} rx={300} />
 		<path d="M-270 120 L-280 20 Q-280 -60 -220 -110 L-150 -130 Q-120 -80 -60 -90 L-20 -120 Q60 -40 160 -10 Q280 20 290 90 L290 120 Z" fill={palette.white} />
@@ -22,7 +22,7 @@ const Shoe: React.FC = () => (
 	</g>
 );
 
-const TeaBag: React.FC<{tagOnly?: boolean}> = ({tagOnly}) => (
+export const TeaBag: React.FC<{tagOnly?: boolean}> = ({tagOnly}) => (
 	<g>
 		{!tagOnly && <rect x={-46} y={-56} width={92} height={112} rx={12} fill="#F3E1C0" stroke="#D9BF92" strokeWidth={5} />}
 		{!tagOnly && <rect x={-30} y={-30} width={60} height={60} rx={10} fill="#B98A52" opacity={0.4} />}

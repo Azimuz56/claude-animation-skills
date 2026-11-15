@@ -11,7 +11,7 @@ import {SceneProps} from './types';
 const COLORS = [palette.accent, palette.blue, palette.accent2, palette.green, '#B58CF2', '#FF8FB1'];
 
 /** Вешалка. (0,0) — верх крючка. ring — показать кольцо-открывашку на шейке */
-const Hanger: React.FC<{ring?: boolean; garment?: string; stroke?: number}> = ({ring, garment, stroke = 9}) => (
+export const Hanger: React.FC<{ring?: boolean; garment?: string; stroke?: number}> = ({ring, garment, stroke = 9}) => (
 	<g>
 		{garment && <Garment color={garment} />}
 		<path d="M-14 18 Q-14 0 0 0 Q14 0 14 18 Q14 30 0 34 L0 48" fill="none" stroke="#8E96A3" strokeWidth={stroke} strokeLinecap="round" />
@@ -26,7 +26,7 @@ const Garment: React.FC<{color: string}> = ({color}) => (
 );
 
 /** Кольцо-открывашка от банки. (x,y) — центр верхнего (малого) отверстия */
-const PullRing: React.FC<{x: number; y: number; s: number; rot?: number}> = ({x, y, s, rot = 0}) => (
+export const PullRing: React.FC<{x: number; y: number; s: number; rot?: number}> = ({x, y, s, rot = 0}) => (
 	<g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`}>
 		<path d="M-40 -30 Q-40 -50 0 -50 Q40 -50 40 -30 L48 70 Q50 130 0 132 Q-50 130 -48 70 Z" fill="#D7DCE3" stroke="#A7AFBA" strokeWidth={6} />
 		<ellipse cx={0} cy={-18} rx={22} ry={18} fill={palette.bg} stroke="#A7AFBA" strokeWidth={5} />

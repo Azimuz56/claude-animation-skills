@@ -10,7 +10,8 @@
     "setup-voice": "bash scripts/setup-voice.sh",
     "voice": "tsx scripts/make-voice.ts",
     "sfx": "python3 scripts/build-sfx.py",
-    "master": "remotion ffmpeg -y -v error -i out/reels_raw.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:a aac -b:a 192k -t 60 -movflags +faststart out/reels_5_lifehacks.mp4"
+    "master": "remotion ffmpeg -y -v error -i out/reels_raw.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:a aac -b:a 192k -t 60 -movflags +faststart out/reels_5_lifehacks.mp4",
+    "cover": "remotion still src/index.ts Cover out/cover.png && remotion ffmpeg -y -v error -i out/cover.png -q:v 2 out/cover.jpg"
   },
   "keywords": [],
   "author": "",
