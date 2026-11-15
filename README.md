@@ -74,6 +74,17 @@ kit/setup.sh                    one-time setup
 
 To add a quick skill, copy a folder like `skills/graph`, change `template.html` (read the spec from `const SPEC = __SPEC__`) and its `DEFAULTS` in `build.py`, then run `./install.sh` again.
 
+## Third-party skills
+
+These skills are included from other open-source projects and keep their authors' licenses. `install.sh` links them the same way as the skills above.
+
+| Skill | What it makes | Source | License |
+|---|---|---|---|
+| `/animate` | Procedural canvas animations in many styles (cut paper, crosshatch, riso, sketchbook, math, pixel, isometric) with a synthesized score | cth9191/animate | MIT (`skills/animate/LICENSE`) |
+| `/story-animator` | Narrated 2D animated story films drawn in Remotion, with ElevenLabs narration | Deenu Khan, story-animator | MIT (`skills/story-animator/LICENSE`) |
+| `/multik` | 9:16 explainer cartoons with your own hero and style, Remotion (in Russian) | Artemii Miller, skill-multik | MIT (`skills/multik/LICENSE`) |
+| `/tts`, `/characteristic-voice`, `/speech-to-text`, `/sound-fx`, `/text-to-music`, `/music-video`, `/video-translation`, `/daily-news-caster`, `/chat-with-anyone` | Voice, transcription, sound effects, music, music videos and dubbing. Most need a `NOIZ_API_KEY` | NoizAI/skills | No license file in the source repo |
+
 ## Credits
 
 - [HyperFrames](https://github.com/heygen-com/hyperframes) by HeyGen renders the quick skills.
