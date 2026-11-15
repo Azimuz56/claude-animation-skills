@@ -1,2 +1,5 @@
 node_modules/
 out/check/
+.venv/
+.cache/
+out/reels_raw.mp4

@@ -7,6 +7,10 @@
  *  - `beats`    — моменты внутри сцены (от её начала): когда что падает, звенит и т.д.
  *  - `sfx`      — звуковые эффекты внутри сцены: { at: секунда, sound: имя файла из public/audio без .wav }
  *
+ *  - `voice`    — реплики диктора: { at: секунда от начала сцены, text: 'что сказать' }.
+ *               После правки текста запустите `npm run voice` — файлы озвучки пересоберутся.
+ *               Числа пишите словами («девяносто»), буква «ё» помогает правильному ударению.
+ *
  * Эмодзи 🤯 и 📌 рисуются векторными иконками (src/components/Emoji.tsx), остальные — системным шрифтом.
  */
 
@@ -47,11 +51,31 @@ export const safeZone = {
 
 export const audio = {
 	beat: 'beat', // public/audio/beat.wav
-	beatVolume: 0.32,
-	sfxVolume: 0.7,
+	beatVolume: 0.22,
+	/** громкость бита, пока говорит диктор (приглушение) */
+	beatVolumeUnderVoice: 0.06,
+	sfxVolume: 0.55,
+	/** множитель громкости эффектов, которые звучат поверх реплики диктора */
+	sfxUnderVoice: 0.35,
 	transitionSound: 'whoosh', // играет на каждой смене сцены
 	transitionFrames: 14, // длина «вжух»-шторки (кадров)
 };
+
+/** Озвучка: локальный нейроголос Piper (русский). Модели: denis, dmitri, irina (жен.), ruslan. */
+export const voiceover = {
+	enabled: true,
+	model: 'ru_RU-ruslan-medium',
+	/** темп: меньше 1 — быстрее, больше 1 — медленнее */
+	lengthScale: 0.94,
+	/** «живость» интонации (0..1): меньше — ровнее и чётче, больше — выразительнее */
+	noiseScale: 0.667,
+	noiseW: 0.8,
+	/** сколько дублей синтезировать на реплику; лучший выбирается распознаванием речи (нужно `npm run setup-voice -- --check`) */
+	takes: 4,
+	volume: 1.0,
+};
+
+export type VoiceLine = {at: number; text: string};
 
 export type Sfx = {at: number; sound: string; volume?: number};
 
@@ -66,6 +90,7 @@ export type SceneConfig = {
 	caption?: string;
 	beats: Record<string, number>;
 	sfx: Sfx[];
+	voice?: VoiceLine[];
 };
 
 export const scenes: SceneConfig[] = [
@@ -77,6 +102,9 @@ export const scenes: SceneConfig[] = [
 		subtitle: '№5 — гениальный 🤯',
 		beats: {subtitle: 0.6},
 		sfx: [{at: 0, sound: 'click'}, {at: 0.6, sound: 'click', volume: 0.6}],
+		voice: [
+			{at: 0.05, text: 'Пять лайфхаков для общаги!'},
+		],
 	},
 	{
 		component: 'Omelet',
@@ -108,6 +136,13 @@ export const scenes: SceneConfig[] = [
 			{at: 9.0, sound: 'ding'},
 			{at: 9.2, sound: 'sparkle', volume: 0.6},
 		],
+		voice: [
+			{at: 0.15, text: 'Первый: омлет без плиты.'},
+			{at: 2.05, text: 'Два яйца, молоко и сыр — прямо в кружку.'},
+			{at: 4.6, text: 'Размешай вилкой —'},
+			{at: 6.2, text: 'и в микроволновку на девяносто секунд.'},
+			{at: 9.15, text: 'Готово!'},
+		],
 	},
 	{
 		component: 'Bread',
@@ -134,6 +169,12 @@ export const scenes: SceneConfig[] = [
 			{at: 6.8, sound: 'ding'},
 			{at: 7.0, sound: 'sparkle', volume: 0.6},
 		],
+		voice: [
+			{at: 0.15, text: 'Второй: чёрствый хлеб не выбрасывай!'},
+			{at: 2.6, text: 'Сбрызни водой —'},
+			{at: 4.3, text: 'и в микроволновку на двадцать секунд.'},
+			{at: 7.1, text: 'Мягкий, как свежий!'},
+		],
 	},
 	{
 		component: 'Closet',
@@ -159,6 +200,12 @@ export const scenes: SceneConfig[] = [
 			{at: 6.1, sound: 'click', volume: 0.7},
 			{at: 7.6, sound: 'sparkle', volume: 0.7},
 		],
+		voice: [
+			{at: 0.15, text: 'Третий: места в шкафу в два раза больше.'},
+			{at: 2.9, text: 'Надень кольцо от банки на вешалку,'},
+			{at: 5.2, text: 'а в него — следующую.'},
+			{at: 7.6, text: 'Бесплатный органайзер!'},
+		],
 	},
 	{
 		component: 'Shirt',
@@ -177,6 +224,11 @@ export const scenes: SceneConfig[] = [
 		sfx: [
 			{at: 2.8, sound: 'click'},
 			{at: 8.0, sound: 'sparkle'},
+		],
+		voice: [
+			{at: 0.15, text: 'Четвёртый: нет утюга?'},
+			{at: 2.8, text: 'Повесь рубашку в ванной и включи горячий душ.'},
+			{at: 6.2, text: 'Пар сам разгладит складки.'},
 		],
 	},
 	{
@@ -199,6 +251,11 @@ export const scenes: SceneConfig[] = [
 			{at: 6.6, sound: 'ding'},
 			{at: 6.8, sound: 'sparkle'},
 		],
+		voice: [
+			{at: 0.15, text: 'И пятый, гениальный! Кроссовки пахнут?'},
+			{at: 2.85, text: 'Положи в них на ночь сухие чайные пакетики.'},
+			{at: 6.8, text: 'Утром запаха нет!'},
+		],
 	},
 	{
 		component: 'Cta',
@@ -210,6 +267,10 @@ export const scenes: SceneConfig[] = [
 		sfx: [
 			{at: 0.25, sound: 'ding', volume: 0.7},
 			{at: 0.9, sound: 'click'},
+		],
+		voice: [
+			{at: 0.05, text: 'Сохрани, пригодится!'},
+			{at: 1.3, text: 'Какой лайфхак добавить во вторую часть? Пиши в комментах!'},
 		],
 	},
 ];

@@ -4,10 +4,13 @@
   "description": "",
   "scripts": {
     "studio": "remotion studio src/index.ts",
-    "sounds": "node scripts/make-sounds.mjs",
-    "render": "remotion render src/index.ts Reels5Lifehacks out/reels_5_lifehacks.mp4",
+    "render": "remotion render src/index.ts Reels5Lifehacks out/reels_raw.mp4 && npm run master",
     "stills": "node scripts/stills.mjs",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "setup-voice": "bash scripts/setup-voice.sh",
+    "voice": "tsx scripts/make-voice.ts",
+    "sfx": "python3 scripts/build-sfx.py",
+    "master": "remotion ffmpeg -y -v error -i out/reels_raw.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:a aac -b:a 192k -t 60 -movflags +faststart out/reels_5_lifehacks.mp4"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +28,7 @@
   "private": true,
   "devDependencies": {
     "@types/react": "^18.3.31",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.3"
   }
 }
